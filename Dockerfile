@@ -6,7 +6,8 @@ RUN go mod download
 COPY . .
 RUN go build
 
-FROM alpine
-RUN apk add --no-cache restic rclone bash openssh
+FROM docker.io/restic/restic:0.13.0
+RUN apk add --no-cache rclone bash
 COPY --from=builder /app/autorestic /usr/bin/autorestic
+ENTRYPOINT []
 CMD [ "autorestic" ]
